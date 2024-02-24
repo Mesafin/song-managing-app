@@ -6,4 +6,5 @@ export const FETCH_SONGS = 'FETCH_SONGS';
 export const SET_SONGS = 'SET_SONGS';
 export const FETCH_OVERALL_STATISTICS = 'FETCH_OVERALL_STATISTICS';
 export const SET_OVERALL_STATISTICS = 'SET_OVERALL_STATISTICS';
-export const API_URL = 'http://localhost:3330';
+// export const API_URL = 'http://localhost:3330';
+export const API_URL = 'https://song-managing-app-server-side.onrender.com/';
