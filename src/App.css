@@ -160,4 +160,7 @@ input.error {
         .d-none {
           display: none;
         }
+        .create {
+          margin: 20px;
+        }
 }
