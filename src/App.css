@@ -141,6 +141,10 @@ input.error {
 .statisticsMobile{
   width: 60%;
 }
+.musicIconSize{
+  width: 80px;
+  height: auto;
+}
 .d-none{
   display: block;
 }
@@ -162,5 +166,9 @@ input.error {
         }
         .create {
           margin: 20px;
+        }
+
+        h4 {
+          font-weight: lighter;
         }
 }

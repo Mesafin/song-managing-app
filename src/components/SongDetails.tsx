@@ -93,7 +93,7 @@ const SongDetails: React.FC<Props> = ({ song }) => {
   return (
     <>
       <div className="song-details" style={{ display: "flex", gap: "3%" }}>
-        <FcMusic style={{ height: "auto", width: "80px" }} />
+        <FcMusic className='d-none musicIconSize' />
         <div>
           <h4>
             <GiLoveSong />{" "}
