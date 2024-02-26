@@ -14,8 +14,8 @@ function* addSongSaga(action: PayloadAction<Song>) {
   try {
     const newSong: Song = yield call(addSongApi, action.payload);
     yield put(addSong(newSong));
-  } catch (error: any) {
-    console.error('Error adding song:', error.message);
+  } catch (error: unknown) {
+    console.error('Error adding song:', (error as Error).message);
   }
 }
 
@@ -23,8 +23,8 @@ function* updateSongSaga(action: PayloadAction<Song>) {
   try {
     const updatedSong: Song = yield call(updateSongApi, action.payload);
     yield put(updateSong(updatedSong));
-  } catch (error: any) {
-    console.error('Error updating song:', error.message);
+  } catch (error: unknown) {
+    console.error('Error updating song:', (error as Error).message);
   }
 }
 
@@ -33,8 +33,8 @@ function* deleteSongSaga(action: PayloadAction<string>) {
     // console.log("delete", action.payload)
     yield call(deleteSongApi, action.payload);
     yield put(deleteSong(action.payload));
-  } catch (error: any) {
-    console.error('Error deleting song:', error.message);
+  } catch (error: unknown) {
+    console.error('Error deleting song:', (error as Error).message);
   }
 }
 
@@ -42,8 +42,8 @@ function* fetchSongsSaga() {
   try {
     const songs: Song[] = yield call(fetchSongsApi);
     yield put(setSongs(songs));
-  } catch (error: any) {
-    console.error(error.message);
+  } catch (error: unknown) {
+    console.error((error as Error).message);
   }
 }
 
@@ -52,8 +52,8 @@ function* fetchOverallStatisticsSaga() {
   try {
     const overallStatistics: OverallStatistics = yield call(fetchOverallStatisticsApi);
     yield put(setOverallStatistics(overallStatistics));
-  } catch (error: any) {
-    console.error('Error fetching overall statistics:', error.message);
+  } catch (error: unknown) {
+    console.error('Error fetching overall statistics:', (error as Error).message);
   }
 }
 

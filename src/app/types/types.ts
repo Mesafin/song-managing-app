@@ -20,19 +20,22 @@ export interface OverallStatistics {
   songsInEachGenre: SongsPerGenre[];
   artistsAlbumsCount: ArtistAlbumCount[];
   songsInEachAlbum: AlbumCount[];
-  artistsSongsCount: ArtistSongs[];
+  artistsSongsCount: ArtistSongsCount[];
 }
 
-interface ArtistSongs {
-  _id: string;
-  count: number;
-}
 interface GenreCount {
   _id: string;
   count: number;
 }
 
 interface ArtistAlbumCount {
+  _id: {
+    artist: string;
+    album: string;
+  };
+  count: number;
+}
+interface ArtistSongsCount {
   _id: {
     artist: string;
     album: string;

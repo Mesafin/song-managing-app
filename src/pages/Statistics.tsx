@@ -2,22 +2,22 @@
 import { css } from "@emotion/react";
 import { FcMusic } from "react-icons/fc";
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
 import { IoArrowBack } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 import { RootState } from '../app/store';
 import { fetchOverallStatistics } from '../app/actions/songsActions';
-import { OverallStatistics } from '../app/types/types';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
 
-interface StatisticsProps {
-  overallStatistics: OverallStatistics | null;
-  fetchOverallStatistics: () => void;
-}
 
-const Statistics: React.FC<StatisticsProps> = ({ overallStatistics, fetchOverallStatistics }) => {
+const Statistics: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const overallStatistics = useAppSelector((state: RootState) => state.overall.overallStatistics);
+
   useEffect(() => {
-    fetchOverallStatistics();
-  }, [fetchOverallStatistics]);
+    dispatch(fetchOverallStatistics());
+  }, [dispatch]);
+
+  console.log(overallStatistics);
 
   return (
     <div className="statisticsMobile"
@@ -61,11 +61,11 @@ const Statistics: React.FC<StatisticsProps> = ({ overallStatistics, fetchOverall
                   </tr>
                   <tr>
                     <td>Total Artists</td>
-                    <td>{overallStatistics.artistsAlbumsCount.length}</td>
+                    <td>{overallStatistics.artistsCount.length}</td>
                   </tr>
                   <tr>
                     <td>Total Albums</td>
-                    <td>{overallStatistics.artistsAlbumsCount.length}</td>
+                    <td>{overallStatistics.albumsCount.length}</td>
                   </tr>
                   <tr>
                     <td>Total Genres</td>
@@ -100,12 +100,15 @@ const Statistics: React.FC<StatisticsProps> = ({ overallStatistics, fetchOverall
                     <td style={{ width: "50%" }}>Genre</td>
                     <td style={{ width: "30%" }}>Total Songs</td>
                   </tr>
-                  {overallStatistics.songsInEachGenre.map((genre, index) => (
-                    <tr key={index}>
-                      <td>{genre._id}</td>
-                      <td>{genre.count}</td>
-                    </tr>
-                  ))}
+  {overallStatistics.songsInEachGenre.slice() 
+  .sort((a, b) => a._id.localeCompare(b._id)) 
+  .map((genre, index) => (
+    <tr key={index}>
+      <td>{genre._id}</td>
+      <td>{genre.count}</td>
+    </tr>
+  ))}
+
                 </tbody>
               </table>
             </div>
@@ -136,12 +139,15 @@ const Statistics: React.FC<StatisticsProps> = ({ overallStatistics, fetchOverall
                     <td style={{ width: "50%" }}>Album Name</td>
                     <td style={{ width: "30%" }}>Total Songs</td>
                   </tr>
-                  {overallStatistics.songsInEachAlbum.map((album, index) => (
-                    <tr key={index}>
-                      <td>{album._id}</td>
-                      <td>{album.count}</td>
-                    </tr>
-                  ))}
+{overallStatistics.songsInEachAlbum?.slice() 
+  .sort((a, b) => a._id.localeCompare(b._id)) 
+  .map((album, index) => (
+    <tr key={index}>
+      <td>{album._id}</td>
+      <td>{album.count}</td>
+    </tr>
+  ))}
+
                 </tbody>
               </table>
             </div>
@@ -172,19 +178,24 @@ const Statistics: React.FC<StatisticsProps> = ({ overallStatistics, fetchOverall
                     <td style={{ width: "35%" }}>Total Albums</td>
                     <td style={{ width: "20%" }}>Total Songs</td>
                   </tr>
-                  {overallStatistics?.artistsAlbumsCount.map(
-                    ({ _id: { artist, album }, count }) => (
-                      <tr key={`${artist}-${album}`}>
-                        <td>{artist}</td>
-                        <td>{count}</td>
-                        <td>
-                          {overallStatistics?.artistsSongsCount.find(
-                            ({ _id }) => _id.artist === artist
-                          )?.count || 0}
-                        </td>
-                      </tr>
-                    )
-                  )}
+                    {overallStatistics?.artistsCount.slice() 
+  .sort((a, b) => a._id.localeCompare(b._id)) 
+  .map((artist, index) => (
+    <tr key={index}>
+      <td>{artist._id}</td>
+      <td>
+        {overallStatistics?.artistsAlbumsCount.find(
+          (name) => name._id.artist === artist._id
+        )?.count || 0}
+      </td>
+      <td>
+        {overallStatistics?.artistsSongsCount.find(
+          (name) => name._id.artist === artist._id
+        )?.count || 0}
+      </td>
+    </tr>
+  ))}
+
                 </tbody>
               </table>
             </div>
@@ -202,12 +213,4 @@ const Statistics: React.FC<StatisticsProps> = ({ overallStatistics, fetchOverall
   );
 };
 
-const mapStateToProps = (state: RootState) => ({
-  overallStatistics: state.overall.overallStatistics,
-});
-
-const mapDispatchToProps = {
-  fetchOverallStatistics,
-};
-
-export const ConnectedStatistics =  connect(mapStateToProps, mapDispatchToProps)(Statistics);
+export default Statistics;

@@ -1,7 +1,7 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import SongList from "./pages/SongList";
-import { ConnectedStatistics } from "./pages/Statistics";
+import Statistics from "./pages/Statistics";
 import Navbar from "./components/NavBar";
 import Home from "./pages/Home";
 
@@ -12,7 +12,7 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/song-list" element={<SongList />} />
-        <Route path="/statistics" element={<ConnectedStatistics />} />
+        <Route path="/statistics" element={<Statistics />} />
       </Routes>
     </>
   );

@@ -4,6 +4,7 @@ import { useAppDispatch } from "../app/hooks";
 import { useState } from "react";
 import { updateSong } from "../app/actions/songsActions";
 import { enqueueSnackbar } from "notistack";
+import { Song } from "../app/types/types";
 
 const ModalBackdrop = styled.div`
   position: fixed;
@@ -30,12 +31,7 @@ const DeleteIcon = styled.span`
 interface Props {
   modalRef: React.RefObject<HTMLDivElement>;
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
-    formData: {
-    title: string;
-    artist: string;
-    album: string;
-    genre: string;
-  };
+  formData: Song
 }
 
 const UpdateModal: React.FC<Props> = ({
