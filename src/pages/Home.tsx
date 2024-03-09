@@ -1,21 +1,28 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+import { RootState } from '../app/store';
+import { fetchSongs } from '../app/actions/songsActions';
 import { useState, useEffect } from 'react';
 import Spinner from '../components/Spinner';
 import { Link } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
 
 const Home: React.FC = () => {
+    const dispatch = useAppDispatch();
+    const { songs } = useAppSelector((state: RootState) => state.songs);
     const [loading, setLoading] = useState<boolean>(true);
     const [showContent, setShowContent] = useState<boolean>(false);
 
+
     useEffect(() => {
         const timer = setTimeout(() => {
+            dispatch(fetchSongs());
             setLoading(false);
             setShowContent(true);
         }, 2000);
 
         return () => clearTimeout(timer);
-    }, []);
+    }, [dispatch, songs]);
 
     return (
         <>
